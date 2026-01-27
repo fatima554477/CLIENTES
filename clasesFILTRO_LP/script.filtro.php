@@ -11,6 +11,7 @@
 			var query=$("#NOMBRE_EVENTO").val();
 var DEPARTAMENTO2=$("#DEPARTAMENTO2WE").val();
 var nommbrerazon=$("#nommbrerazon_1").val();
+var CUENTRA_MAESTRA=$("#CUENTRA_MAESTRA_1").val();
 var C_NOMBRE_COMERCIAL_EMPRESA=$("#C_NOMBRE_COMERCIAL_EMPRESA_1").val();
 var usuario=$("#usuario_1").val();
 var contrasenia=$("#contrasenia_1").val();
@@ -29,6 +30,7 @@ var validaLISTADO=$("#validaLISTADO_1").val();
 
 /*inicia copiar y pegar*/'nommbrerazon':nommbrerazon,
 'usuario':usuario,
+'CUENTRA_MAESTRA':CUENTRA_MAESTRA,
 'C_NOMBRE_COMERCIAL_EMPRESA':C_NOMBRE_COMERCIAL_EMPRESA,
 'contrasenia':contrasenia,
 'email':email,

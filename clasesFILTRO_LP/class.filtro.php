@@ -46,6 +46,9 @@ $sWhere2.="  $tables1.C_NOMBRE_COMERCIAL_EMPRESA LIKE '%".TRIM($search['C_NOMBRE
 
 if($search['usuario']!=""){	
 $sWhere2.="  $tables.usuario LIKE '%".TRIM($search['usuario'])."%' and ";}
+if($search['CUENTRA_MAESTRA']!=""){	
+$sWhere2.="  $tables1.CUENTRA_MAESTRA LIKE '%".TRIM($search['CUENTRA_MAESTRA'])."%' and ";}
+
 if($search['contrasenia']!=""){
 $sWhere2.="  $tables.contrasenia LIKE '%".TRIM($search['contrasenia'])."%' and ";}
 if($search['email']!=""){

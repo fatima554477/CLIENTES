@@ -30,6 +30,7 @@ if($action == "ajax"){
 	$tables="06usuarios";
 	
 
+$CUENTRA_MAESTRA = isset($_POST["CUENTRA_MAESTRA"])?$_POST["CUENTRA_MAESTRA"]:""; 
 $nommbrerazon = isset($_POST["nommbrerazon"])?$_POST["nommbrerazon"]:""; 
 $C_NOMBRE_COMERCIAL_EMPRESA = isset($_POST["C_NOMBRE_COMERCIAL_EMPRESA"])?$_POST["C_NOMBRE_COMERCIAL_EMPRESA"]:""; 
 $usuario = isset($_POST["usuario"])?$_POST["usuario"]:""; 
@@ -47,6 +48,7 @@ $per_page=intval($_POST["per_page"]);
 	
 	$search=array(
 
+"CUENTRA_MAESTRA"=>$CUENTRA_MAESTRA,
 "nommbrerazon"=>$nommbrerazon,
 "C_NOMBRE_COMERCIAL_EMPRESA"=>$C_NOMBRE_COMERCIAL_EMPRESA,
 "usuario"=>$usuario,
@@ -89,8 +91,10 @@ $per_page=intval($_POST["per_page"]);
             <tr>
 
 <?php /*inicia copiar y pegar iniciaA3*/ ?>
-
-<!--<hr/><H1>HTML FILTRO .PHP A3</H1><BR/>--><?php 
+<?php 
+if($database->plantilla_filtro($nombreTabla,"CUENTRA_MAESTRA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">CUENTRA MAESTRA</th>
+<?php } ?>
+<?php 
 if($database->plantilla_filtro($nombreTabla,"nommbrerazon",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">NOMBRE FISCAL DEL CLIENTE</th>
 <?php } ?>
 <?php 
@@ -127,11 +131,17 @@ if($database->plantilla_filtro($nombreTabla,"validaLISTADO",$altaeventos,$DEPART
             <tr>
 
 <?php /*inicia copiar y pegar iniciaA4*/ ?>
+<?php  
+if($database->plantilla_filtro($nombreTabla,"CUENTRA_MAESTRA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="CUENTRA_MAESTRA_1" value="<?php echo $CUENTRA_MAESTRA; ?>"></td> 
 
-<!--<hr/><H1>HTML FILTRO E INPUT .PHP A4</H1><BR/>--><?php  
+<?php } ?>
+
+<?php  
 if($database->plantilla_filtro($nombreTabla,"nommbrerazon",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="nommbrerazon_1" value="<?php 
 echo $nommbrerazon; ?>"></td>
 <?php } ?>
+
+
 <?php  
 if($database->plantilla_filtro($nombreTabla,"C_NOMBRE_COMERCIAL_EMPRESA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="C_NOMBRE_COMERCIAL_EMPRESA_1" value="<?php 
 echo $C_NOMBRE_COMERCIAL_EMPRESA; ?>"></td>
@@ -178,10 +188,11 @@ echo $validaLISTADO; ?>"></td>
 		
 		foreach ($datos as $key=>$row){?>
 		<tr style="text-align:center">
-
-<?php /*inicia copiar y pegar iniciaA5*/ ?>
-<!--<hr/><H1>FOREACH FILTRO .PHP A5</H1><BR/>-->
-
+<?php if($database->plantilla_filtro($nombreTabla,"CUENTRA_MAESTRA",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
+<td style="text-align:center; text-transform: uppercase;">
+    <?php echo $row['CUENTRA_MAESTRA']; ?>
+</td>
+<?php } ?>
 <?php  if($database->plantilla_filtro($nombreTabla,"nommbrerazon",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
 
 

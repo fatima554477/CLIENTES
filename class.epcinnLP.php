@@ -42,6 +42,7 @@ PROGRAMER
 		
 		$query = mysqli_query($conn,$var);
 		echo "<table class='table mb-0 table-striped'><tr>
+		<td>CUENTA MAESTRA</td>
 		<td>usuario</td>
 		<td>NOMBRE COMERCIAL</td>
 		<td>RAZÓN SOCIAL</td>
@@ -221,6 +222,7 @@ PROGRAMER
 		$conn = $this->db();
 		$var1 = 'select *,06usuarios.id AS IDDD from  06usuarios, 06direccionclientes WHERE 
 		06usuarios.id = 06direccionclientes.idRelacion and 
+		
 		06usuarios.usuario= "'.$usuario.'" and
 		06usuarios.nommbrerazon="'.$nommbrerazon.'" and 
 		06direccionclientes.P_RFC_MTDP= "'.$rfc.'" and 
@@ -246,7 +248,7 @@ PROGRAMER
 	}
 
 
-	public function guardar_usuario2 ($usuario , $nommbrerazon ,$C_NOMBRE_COMERCIAL_EMPRESA, $contrasenia , $email , $rfc, $mandacorreo2A, $id_empresa ){
+	public function guardar_usuario2 ($CUENTRA_MAESTRA,$usuario , $nommbrerazon ,$C_NOMBRE_COMERCIAL_EMPRESA, $contrasenia , $email , $rfc, $mandacorreo2A, $id_empresa ){
 
 	if($mandacorreo2A=='si'){
 	if($this->ambiente()=='PROD'){
@@ -400,14 +402,15 @@ PROGRAMER
 			if($existe3>=1){
 		mysqli_query($conn,"update 06direccionclientes set 
 		P_RFC_MTDP = '".$rfc."',
-		C_NOMBRE_COMERCIAL_EMPRESA = '".$C_NOMBRE_COMERCIAL_EMPRESA."'
+		C_NOMBRE_COMERCIAL_EMPRESA = '".$C_NOMBRE_COMERCIAL_EMPRESA."',
+		CUENTRA_MAESTRA = '".$CUENTRA_MAESTRA."'
 		where idRelacion = '".$idlc."' ; ") or die('P156'.mysqli_error($conn));
 		//return "Actualizado 06usuarios, 06metodopago, 06direccionclientes"; C_NOMBRE_COMERCIAL_EMPRESA
 
 		}else{
 		mysqli_query($conn,"insert into 06direccionclientes 
-		( P_RFC_MTDP, C_NOMBRE_COMERCIAL_EMPRESA, idRelacion) values 
-		( '".$rfc."' ,  '".$C_NOMBRE_COMERCIAL_EMPRESA."',  '".$idlc."' ); ") or die('P160'.mysqli_error($conn));
+		( P_RFC_MTDP, C_NOMBRE_COMERCIAL_EMPRESA,CUENTRA_MAESTRA, idRelacion) values 
+		( '".$rfc."' ,  '".$C_NOMBRE_COMERCIAL_EMPRESA."' ,  '".$CUENTRA_MAESTRA."',  '".$idlc."' ); ") or die('P160'.mysqli_error($conn));
 
 		//return "Ingresado";
 		}		

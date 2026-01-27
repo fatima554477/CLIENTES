@@ -18,6 +18,7 @@ $borra_listadoC = isset($_POST["borra_listadoC"])?$_POST["borra_listadoC"]:"";
 
 if($validaLISTADO == 'validaLISTADO'){
 	
+$CUENTRA_MAESTRA = isset($_POST["CUENTRA_MAESTRA"])?$_POST["CUENTRA_MAESTRA"]:"";
 $usuario = isset($_POST["usuario"])?$_POST["usuario"]:"";
 $C_NOMBRE_COMERCIAL_EMPRESA = isset($_POST["C_NOMBRE_COMERCIAL_EMPRESA"])?$_POST["C_NOMBRE_COMERCIAL_EMPRESA"]:"";
 $nommbrerazon = isset($_POST["nommbrerazon"])?$_POST["nommbrerazon"]:"";
@@ -30,7 +31,7 @@ $id_empresa = isset($_POST["id_empresa"])?$_POST["id_empresa"]:"";
 	if($nommbrerazon ==""){
 	echo "<P style='color:red; font-size:18px;'>FAVOR DE LLENAR TODOS LOS CAMPOS EN ROJO</p>";	
 	}else{
-	echo $proveedoresC->guardar_usuario2 ( $usuario , $nommbrerazon ,$C_NOMBRE_COMERCIAL_EMPRESA, $contrasenia , $email, $rfc, $mandacorreo2A, $id_empresa );
+	echo $proveedoresC->guardar_usuario2 ( $CUENTRA_MAESTRA,$usuario , $nommbrerazon ,$C_NOMBRE_COMERCIAL_EMPRESA, $contrasenia , $email, $rfc, $mandacorreo2A, $id_empresa );
 	}
 	
 

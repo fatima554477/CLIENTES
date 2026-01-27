@@ -1,37 +1,5 @@
-<?php
-/*$connecDB = $proveedoresC->db();
 
-$_SESSION['where'] = "  ";
 
-$get_total_rows = mysqli_fetch_array($results); //total records
-$item_per_page = 20;
-//break total records into pages
-$pages = 500;
-*/
-
-?>
-<!--<script type="text/javascript" src="inventario/js/jquery-1.11.2.min.js"></script>-->
-<!--
-<script type="text/javascript">
-$(document).ready(function() {
-	
-	$("#results").load("listadoclientes/fetch_pagesLP.php");  //initial page number to load
-	
-	$(".pagination").bootpag({
-	   total: <?php echo $pages; ?>,
-	   page: 1,
-	   maxVisible: 5 
-	}).on("page", function(e, num){
-		e.preventDefault();
-		$("#results").prepend('<div class="loading-indication"><img src="inventario/ajax-loader.gif" /> Cargando datos...</div>');
-		$("#results").load("listadoclientes/fetch_pagesLP.php", {'page':num});
-	});
-
-});
-
-</script>
-
-<link href="inventario/css/style2.css" rel="stylesheet" type="text/css">-->
 
 <div id="content">     
 			<hr/>
@@ -47,24 +15,32 @@ $(document).ready(function() {
 	<table table class="table table-striped table-bordered" style="width:100%"  >
 	
 	
+							<div class="col-md-4">
+                         <strong> <label for="validationCustom02" class="form-label">CUENTRA MAESTRA:</label></strong>
+                          <input type="text" class="form-control" id="validationCustom02" value="<?php echo $CUENTRA_MAESTRA; ?>" required="" name="CUENTRA_MAESTRA">
+                          <div class="valid-feedback">Bien!</div>
+                        </div>
+	
+	
 						<div class="col-md-4">
                          <strong> <label for="validationCustom02" class="form-label">NOMBRE FISCAL O RAZÓN SOCIAL DEL CLIENTE:</label></strong>
                           <input type="text" class="form-control" id="validationCustom02" value="<?php echo $nommbrerazon; ?>" required="" name="nommbrerazon">
                           <div class="valid-feedback">Bien!</div>
                         </div>
+						
+						
+						
 						<div class="col-md-4">
                          <strong> <label for="validationCustom02" class="form-label">NOMBRE COMERCIAL CLIENTE:</label></strong>
                           <input type="text" class="form-control" id="validationCustom02" value="<?php echo $C_NOMBRE_COMERCIAL_EMPRESA; ?>" required="" name="C_NOMBRE_COMERCIAL_EMPRESA">
                           <div class="valid-feedback">Bien!</div>
                         </div>
 
-                        <!--<div class="col-md-4">
-                        <strong> <label for="validationCustom02" class="form-label">USUARIO CRM:</label></strong>
-						<div class="input-group mb-3">
-                          <span class="input-group-text">AdminPR_</span> <input type="text" class="form-control" id="validationCustom02" value="<?php echo $usuario; ?>" required="" name="usuario"></div>
-						  
+             <div class="col-md-4">
+                        <strong><label for="validationCustom02" class="form-label">RFC DEL CLIENTE :</label></strong>
+                          <input type="text" class="form-control" id="validationCustom01" value="<?php echo $rfc ?>" required="" name="rfc">
                           <div class="valid-feedback">Bien!</div>
-                        </div>-->
+                        </div>
 
 
                         <div class="col-md-4">
@@ -89,14 +65,10 @@ $(document).ready(function() {
                           <div class="valid-feedback">Bien!</div>
                         </div>
 
-                        <div class="col-md-4">
-                        <strong><label for="validationCustom02" class="form-label">RFC DE LA EMPRESA 1:</label></strong>
-                          <input type="text" class="form-control" id="validationCustom01" value="<?php echo $rfc ?>" required="" name="rfc">
-                          <div class="valid-feedback">Bien!</div>
-                        </div>
+                     
 
-                          <div class="valid-feedback">Bien!</div>
-                        </div>
+            
+                       
 						
                         <div class="col-md-4">
                           <label for="validationCustom02" class="form-label">EMPRESA A LA QUE PERTENECE:</label><br></br>

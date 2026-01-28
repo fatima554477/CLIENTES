@@ -66,16 +66,7 @@ IF($sWhere2!=""){
 		$sWhere3  = '
 		on 06usuarios.id = 06direccionclientes.idRelacion ';	
 		}
-		/*P_RFC_MTDP
-		select *,06usuarios.id AS IDDD from 
-06usuarios, 06direccionclientes WHERE 06usuarios.id = 06direccionclientes.idRelacion  
 
-select *,06usuarios.id AS IDDD from 
-06usuarios left join 06direccionclientes on 06usuarios.id = 06direccionclientes.idRelacion  
-
-SELECT * FROM 01informacionpersonal order by 01informacionpersonal.id desc LIMIT 0,5 
-		
-		*/
 		$sWhere3.="order by nommbrerazon asc";
 		$sql="SELECT $campos 
 		,06usuarios.id AS IDDD
@@ -94,7 +85,7 @@ SELECT * FROM 01informacionpersonal order by 01informacionpersonal.id desc LIMIT
 		
 		
 		
-		$sWhere3.="  order by $tables.id desc ";
+		$sWhere3.="order by nommbrerazon asc";
 		$sql="SELECT $campos 
 		,06usuarios.id AS IDDD
 		,06direccionclientes.C_NOMBRE_COMERCIAL_EMPRESA AS C_NOMBRE_COMERCIAL_EMPRESA

@@ -86,15 +86,34 @@ $per_page=intval($_POST["per_page"]);
 			?>
         </div>
 	<div class="table-responsive">
-	 <table class="table table-striped table-bordered" >	
+<style>
+    thead tr:first-child th {
+        position: sticky;
+        top: 0;
+        background: #c9e8e8;
+        z-index: 10;
+    }
+
+    thead tr:nth-child(2) td {
+        position: sticky;
+        top: 40px; /* Altura del primer encabezado */
+        background: #e2f2f2;
+        z-index: 9;
+    }
+</style>
+<div style="max-height: 600px; overflow-y: auto;">
+	 <table class="table table-striped table-bordered">   
+	 
+	
 		<thead>
             <tr>
+<th style="background:#c9e8e8"></th>
 
-<?php /*inicia copiar y pegar iniciaA3*/ ?>
+
 <?php 
 if($database->plantilla_filtro($nombreTabla,"CUENTRA_MAESTRA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">CUENTRA MAESTRA</th>
 <?php } ?>
-<?php 
+<!--<hr/><H1>HTML FILTRO .PHP A3</H1><BR/>--><?php 
 if($database->plantilla_filtro($nombreTabla,"nommbrerazon",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">NOMBRE FISCAL DEL CLIENTE</th>
 <?php } ?>
 <?php 
@@ -115,33 +134,27 @@ if($database->plantilla_filtro($nombreTabla,"email",$altaeventos,$DEPARTAMENTO)=
 <?php } ?>
 
 
-
+<?php if($database->variablespermisos('','LISTA_CLIENTES ','modificar')=='si'){ ?>
 <th style="background:#c9e8e8">MODIFICAR</th>
-<?php if($database->variablespermisos('','DATOSL_CLIENTES ','borrar')=='si'){ ?>
+
+<?php } ?>
+<?php if($database->variablespermisos('','LISTA_CLIENTES ','borrar')=='si'){ ?>
 <th style="background:#c9e8e8;text-align:center">BORRAR</th>
 
 <?php } ?>
-<!--
-<?php 
-if($database->plantilla_filtro($nombreTabla,"validaLISTADO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8">validaLISTADO</th>
-<?php } ?>
--->
-<?php /*termina copiar y terminaA3*/ ?>
+
             </tr>
             <tr>
+<td style="background:#c9e8e8"></td>
 
-<?php /*inicia copiar y pegar iniciaA4*/ ?>
 <?php  
-if($database->plantilla_filtro($nombreTabla,"CUENTRA_MAESTRA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="CUENTRA_MAESTRA_1" value="<?php echo $CUENTRA_MAESTRA; ?>"></td> 
-
+if($database->plantilla_filtro($nombreTabla,"CUENTRA_MAESTRA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="CUENTRA_MAESTRA_1" value="<?php 
+echo $CUENTRA_MAESTRA; ?>"></td>
 <?php } ?>
-
 <?php  
 if($database->plantilla_filtro($nombreTabla,"nommbrerazon",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="nommbrerazon_1" value="<?php 
 echo $nommbrerazon; ?>"></td>
 <?php } ?>
-
-
 <?php  
 if($database->plantilla_filtro($nombreTabla,"C_NOMBRE_COMERCIAL_EMPRESA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="C_NOMBRE_COMERCIAL_EMPRESA_1" value="<?php 
 echo $C_NOMBRE_COMERCIAL_EMPRESA; ?>"></td>
@@ -162,20 +175,14 @@ echo $usuario; ?>"></td>
 if($database->plantilla_filtro($nombreTabla,"email",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="email_1" value="<?php 
 echo $email; ?>"></td>
 <?php } ?>
+<?php if($database->variablespermisos('','LISTA_CLIENTES ','modificar')=='si'){ ?>
+<td style="background:#c9e8e8"></td>
+<?php } ?>
+<?php if($database->variablespermisos('','LISTA_CLIENTES ','borrar')=='si'){ ?>
+<td style="background:#c9e8e8"></td>
+<?php } ?>
 
-<td style="background:#c9e8e8"></td>
-<?php if($database->variablespermisos('','DATOSL_CLIENTES ','borrar')=='si'){ ?>
-<td style="background:#c9e8e8"></td>
-<?php } ?>
-<!--
-<?php  
-if($database->plantilla_filtro($nombreTabla,"validaLISTADO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="validaLISTADO_1" value="<?php 
-echo $validaLISTADO; ?>"></td>
-<?php } ?>
-<?php /*termina copiar y terminaA4*/ ?>
-<td style="background:#c9e8e8"></td>
-<td style="background:#c9e8e8"></td>
--->
+
 
             </tr>			
         </thead>
@@ -187,16 +194,37 @@ echo $validaLISTADO; ?>"></td>
 		$finales=0;
 		
 		foreach ($datos as $key=>$row){?>
-		<tr style="text-align:center">
+		 <tr <?php echo $id; ?>>
+		 						<td>
+    <input type="checkbox" 
+           class="checkbox"
+           data-id="<?php echo $row['id'];?>" 
+           style="transform: scale(1.1); cursor: pointer;" 
+           onchange="
+               const fila = this.closest('tr');
+               const id = this.getAttribute('data-id');
+               if (this.checked) {
+                      fila.style.filter = 'brightness(65%) sepia(100%) saturate(200%) hue-rotate(0deg)';
+                   localStorage.setItem('checkbox_' + id, 'checked');
+               } else {
+                   fila.style.filter = 'none';
+                   localStorage.removeItem('checkbox_' + id);
+               }">
+</td>
+		
+
+
 <?php if($database->plantilla_filtro($nombreTabla,"CUENTRA_MAESTRA",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
-<td style="text-align:center; text-transform: uppercase;">
-    <?php echo $row['CUENTRA_MAESTRA']; ?>
+<td style="text-align:center">
+    <?php echo strtoupper($row['CUENTRA_MAESTRA']); ?>
 </td>
 <?php } ?>
+
+
 <?php  if($database->plantilla_filtro($nombreTabla,"nommbrerazon",$altaeventos,$DEPARTAMENTO)=="si"){ ?>
 
 
-<td style="text-align:center"><?php //echo $row['nommbrerazon'];?>
+<td style="text-align:center">
 <a href="clientes.php?idc=<?php echo $row["IDDD"]; ?>"><?php echo $row["C_NOMBRE_FISCAL_RS_EMPRESA"]; ?></a>
 </td>
 <?php } ?>
@@ -211,21 +239,15 @@ echo $validaLISTADO; ?>"></td>
 <?php  if($database->plantilla_filtro($nombreTabla,"email",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="text-align:center"><?php echo $row['email'];?></td>
 <?php } ?>
 
-<td>
 
-<a href="<?php echo 'listadoclientes.php'.'?idc='. $row["IDDD"]; ?>"><?php echo $row["IDDD"]; ?></a>
+
+<td>
+<?php if($database->variablespermisos('','LISTA_CLIENTES ','modificar')=='si'){ ?>
+<button type="button" class="btn btn-info btn-xs view_LC" id="<?php echo $row["IDDD"]; ?>">MODIFICAR</button><?php } ?>
 </td>
 
-	<!--
-<?php  if($database->plantilla_filtro($nombreTabla,"validaLISTADO",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td><?php echo $row['validaLISTADO'];?></td>
-<?php } ?>
-<?php /*termina copiar y terminaA5*/ ?>
-		<td>
-<?php if($database->variablespermisos('','ALTA_EVENTOS','modificar')=='si'){ ?>
-<input type="button" name="view" value="MODIFICAR" id="<?php echo $row["IDDD"]; ?>" class="btn btn-info btn-xs view_dataaltaeventosmodifica" />			
-<?php } ?>
-			</td>-->
-			<?php if($database->variablespermisos('','DATOSL_CLIENTES ','borrar')=='si'){ ?>
+
+			<?php if($database->variablespermisos('','LISTA_CLIENTES ','borrar')=='si'){ ?>
 			<td>
 <input type="button" name="view" value="BORRAR" id="<?php echo $row['IDDD']; ?>" class="btn btn-info btn-xs view_BORRARLC" />
 			</td>

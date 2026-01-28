@@ -107,7 +107,7 @@ $per_page=intval($_POST["per_page"]);
 	
 		<thead>
             <tr>
-<th style="background:#c9e8e8"></th>
+<th style="background:#c9e8e8">elige id</th>
 
 
 <?php 

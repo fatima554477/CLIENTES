@@ -108,10 +108,11 @@ $per_page=intval($_POST["per_page"]);
 		<thead>
             <tr>
 <th style="background:#c9e8e8"></th>
+<th style="background:#c9e8e8">AUDITORÍA</th>
 
 
 <?php 
-if($database->plantilla_filtro($nombreTabla,"CUENTRA_MAESTRA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">CUENTRA MAESTRA</th>
+if($database->plantilla_filtro($nombreTabla,"CUENTRA_MAESTRA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">CUENTA MAESTRA</th>
 <?php } ?>
 <!--<hr/><H1>HTML FILTRO .PHP A3</H1><BR/>--><?php 
 if($database->plantilla_filtro($nombreTabla,"nommbrerazon",$altaeventos,$DEPARTAMENTO)=="si"){ ?><th style="background:#c9e8e8;text-align:center">NOMBRE FISCAL DEL CLIENTE</th>
@@ -145,6 +146,7 @@ if($database->plantilla_filtro($nombreTabla,"email",$altaeventos,$DEPARTAMENTO)=
 
             </tr>
             <tr>
+<td style="background:#c9e8e8"></td>
 <td style="background:#c9e8e8"></td>
 
 <?php  
@@ -218,6 +220,21 @@ echo $email; ?>"></td>
     background: #ffe08a !important;   /* el color que quieras */
   }
 </style>
+</td>
+<td style="text-align:center; background:
+    <?php echo ($row["AUDITORIA"] == 'checked') ? '#ceffcc' : '#e9d8ee'; ?>;" 
+    id="color_AUDITORIA2<?php echo $row["IDDD"]; ?>">
+
+    <input type="checkbox"
+        style="width:30px; cursor:pointer;"
+        class="form-check-input"
+        id="AUDITORIA<?php echo $row["IDDD"]; ?>"
+        name="AUDITORIA<?php echo $row["IDDD"]; ?>"
+        value="<?php echo $row["IDDD"]; ?>"
+   
+    />
+  
+
 </td>
 		
 

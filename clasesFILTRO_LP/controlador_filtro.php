@@ -107,7 +107,7 @@ $per_page=intval($_POST["per_page"]);
 	
 		<thead>
             <tr>
-<th style="background:#c9e8e8">elige id</th>
+<th style="background:#c9e8e8"></th>
 
 
 <?php 
@@ -194,22 +194,30 @@ echo $email; ?>"></td>
 		$finales=0;
 		
 		foreach ($datos as $key=>$row){?>
-		 <tr <?php echo $id; ?>>
+		 <tr <?php echo $IDDD; ?>>
 		 						<td>
-    <input type="checkbox" 
-           class="checkbox"
-           data-id="<?php echo $row['id'];?>" 
-           style="transform: scale(1.1); cursor: pointer;" 
-           onchange="
-               const fila = this.closest('tr');
-               const id = this.getAttribute('data-id');
-               if (this.checked) {
-                      fila.style.filter = 'brightness(65%) sepia(100%) saturate(200%) hue-rotate(0deg)';
-                   localStorage.setItem('checkbox_' + id, 'checked');
-               } else {
-                   fila.style.filter = 'none';
-                   localStorage.removeItem('checkbox_' + id);
-               }">
+  <input type="checkbox" 
+       class="checkbox"
+       data-id="<?php echo $row['IDDD'];?>"
+       style="transform: scale(1.1); cursor: pointer;"
+       onchange="
+         const fila = this.closest('tr');
+         const id = this.getAttribute('data-id');
+
+         if (this.checked) {
+           fila.classList.add('fila-seleccionada');
+           localStorage.setItem('checkbox_' + id, 'checked');
+         } else {
+           fila.classList.remove('fila-seleccionada');
+           localStorage.removeItem('checkbox_' + id);
+         }
+       ">
+<style>
+  /* pinta toda la fila (todas las celdas) */
+  tr.fila-seleccionada > td{
+    background: #ffe08a !important;   /* el color que quieras */
+  }
+</style>
 </td>
 		
 

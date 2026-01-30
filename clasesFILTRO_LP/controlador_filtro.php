@@ -108,7 +108,9 @@ $per_page=intval($_POST["per_page"]);
 		<thead>
             <tr>
 <th style="background:#c9e8e8"></th>
-<th style="background:#c9e8e8">AUDITORÍA</th>
+<?php if($database->variablespermisos('','AUDITORIAc','ver')=='si'){ ?>
+  <th style="background:#c9e8e8">AUDITORÍA</th>
+<?php } ?>
 
 
 <?php 
@@ -147,8 +149,9 @@ if($database->plantilla_filtro($nombreTabla,"email",$altaeventos,$DEPARTAMENTO)=
             </tr>
             <tr>
 <td style="background:#c9e8e8"></td>
+<?php if($database->variablespermisos('','AUDITORIAc','ver')=='si'){ ?>
 <td style="background:#c9e8e8"></td>
-
+<?php } ?>
 <?php  
 if($database->plantilla_filtro($nombreTabla,"CUENTRA_MAESTRA",$altaeventos,$DEPARTAMENTO)=="si"){ ?><td style="background:#c9e8e8"><input type="text" class="form-control" id="CUENTRA_MAESTRA_1" value="<?php 
 echo $CUENTRA_MAESTRA; ?>"></td>
@@ -221,21 +224,68 @@ echo $email; ?>"></td>
   }
 </style>
 </td>
-<td style="text-align:center; background:
-    <?php echo ($row["AUDITORIA"] == 'checked') ? '#ceffcc' : '#e9d8ee'; ?>;" 
+
+
+<?php if($database->variablespermisos('','AUDITORIAc','ver')=='si'){ ?>
+
+<td style="text-align:center; background:<?php echo ($row["AUDITORIAc"] == 'checked') ? '#ceffcc' : '#e9d8ee'; 
+
+$puedeGuardar   = ($database->variablespermisos('', 'AUDITORIAc', 'guardar') == 'si');
+$puedeModificar = ($database->variablespermisos('', 'AUDITORIAc', 'modificar') == 'si');
+?>;"
     id="color_AUDITORIA2<?php echo $row["IDDD"]; ?>">
 
-    <input type="checkbox"
-        style="width:30px; cursor:pointer;"
-        class="form-check-input"
-        id="AUDITORIA<?php echo $row["IDDD"]; ?>"
-        name="AUDITORIA<?php echo $row["IDDD"]; ?>"
-        value="<?php echo $row["IDDD"]; ?>"
-   
-    />
-  
+  <input type="checkbox"
+      style="width:30px; cursor:pointer;"
+      class="form-check-input auditoria-checkbox"
+      id="AUDITORIAc<?php echo $row["IDDD"]; ?>"
+      name="AUDITORIAc<?php echo $row["IDDD"]; ?>"
+      value="<?php echo $row["IDDD"]; ?>"
+      data-id="<?php echo $row["IDDD"]; ?>"
+
+      <?php
+      // Estado visual
+      if ($row["AUDITORIAc"] == 'checked') {
+          echo 'checked ';
+      }
+
+      // BLOQUEOS por permisos
+      if (
+          (!$puedeGuardar && $row["AUDITORIAc"] != 'checked') ||  // no puede guardar -> no puede prender por primera vez
+          (!$puedeModificar && $row["AUDITORIAc"] == 'checked')   // no puede modificar -> si ya está prendido, no puede apagar
+      ) {
+          echo 'disabled ';
+      }
+      ?>
+
+onchange="
+  const id = this.dataset.id;
+  const estaba = (localStorage.getItem('auditoria_activo_id') === id);
+
+  // apaga todos
+  document.querySelectorAll('.auditoria-checkbox').forEach(cb => {
+    cb.checked = false;
+    const otherId = cb.dataset.id;
+    const otherCell = document.getElementById('color_AUDITORIA2' + otherId);
+    if (otherCell) otherCell.style.background = '#e9d8ee';
+  });
+
+  if (estaba) {
+    // si era el mismo, lo apaga y limpia
+    localStorage.removeItem('auditoria_activo_id');
+  } else {
+    // prende el nuevo
+    this.checked = true;
+    const cell = document.getElementById('color_AUDITORIA2' + id);
+    if (cell) cell.style.background = '#ceffcc';
+    localStorage.setItem('auditoria_activo_id', id);
+  }
+"
+  />
 
 </td>
+
+<?php } ?>
 		
 
 
@@ -285,9 +335,25 @@ echo $email; ?>"></td>
 			$finales++;
 		}	
 	?>
-		</tbody>
+</tbody>
 		</table>
 		</div>
+		<script>
+			document.querySelectorAll('.auditoria-checkbox').forEach(function (checkbox) {
+				const id = checkbox.getAttribute('data-id');
+				if (!id) {
+					return;
+				}
+				if (localStorage.getItem('auditoria_checkbox_' + id) === 'checked') {
+					checkbox.checked = true;
+					checkbox.disabled = true;
+					const cell = document.getElementById('color_AUDITORIA2' + id);
+					if (cell) {
+						cell.style.background = '#ceffcc';
+					}
+				}
+			});
+		</script>
 		<div class="clearfix">
 			<?php 
 				$inicios=$offset+1;

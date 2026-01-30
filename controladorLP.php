@@ -14,7 +14,14 @@ $proveedoresC = NEW accesoclase();
 $validaLISTADO = isset($_POST["validaLISTADO"])?$_POST["validaLISTADO"]:"";
 $borra_listadoC = isset($_POST["borra_listadoC"])?$_POST["borra_listadoC"]:"";
 
-	
+
+
+$AUDITORIAc_id = isset($_POST["AUDITORIAc_id"])?$_POST["AUDITORIAc_id"]:"";
+$AUDITORIAc_text = isset($_POST["AUDITORIAc_text"])?$_POST["AUDITORIAc_text"]:"";
+
+if($AUDITORIAc_id!='' and ($AUDITORIAc_text=='si' or $AUDITORIAc_text=='no') ){	
+echo $pagoproveedores->ACTUALIZA_AUDITORIAc ($AUDITORIAc_id , $AUDITORIAc_text  );
+}	
 
 if($validaLISTADO == 'validaLISTADO'){
 	
@@ -37,6 +44,20 @@ $id_empresa = isset($_POST["id_empresa"])?$_POST["id_empresa"]:"";
 
 }
 
+
+ $enviarLC = isset($_POST["enviarLC"])?$_POST["enviarLC"]:"";
+ if($enviarLC=='enviarLC'){
+	$CUENTRA_MAESTRA = isset($_POST["CUENTRA_MAESTRA"])?$_POST["CUENTRA_MAESTRA"]:"";
+	$usuario = isset($_POST["usuario"])?$_POST["usuario"]:"";
+	$nommbrerazon = isset($_POST["nommbrerazon"])?$_POST["nommbrerazon"]:"";
+	$C_NOMBRE_COMERCIAL_EMPRESA = isset($_POST["C_NOMBRE_COMERCIAL_EMPRESA"])?$_POST["C_NOMBRE_COMERCIAL_EMPRESA"]:"";
+	$contrasenia = isset($_POST["contrasenia"])?$_POST["contrasenia"]:"";
+	$email = isset($_POST["email"])?$_POST["email"]:"";
+	$rfc = isset($_POST["rfc"])?$_POST["rfc"]:"";
+	$IPLC = isset($_POST["IPLC"])?$_POST["IPLC"]:"";
+
+	echo $proveedoresC->ACTUALIZA_LC($IPLC,$email,$contrasenia,$nommbrerazon,$C_NOMBRE_COMERCIAL_EMPRESA,$rfc,$usuario,$CUENTRA_MAESTRA);
+ }
 
  if($borra_listadoC == 'borra_listadoC' ){
 

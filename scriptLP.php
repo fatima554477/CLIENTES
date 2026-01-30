@@ -96,7 +96,24 @@ function genPass() {
 
 
 
-	$(document).ready(function(){
+$(document).ready(function(){
+
+		$(document).on('click', '.view_LC', function(){
+			var personal_id = $(this).attr("id");
+			$.ajax({
+				url: "listadoclientes/VistaPreviaLC.php",
+				method: "POST",
+				data: {personal_id: personal_id},
+				beforeSend: function(){
+					$('#mensajePORVENDEDOR').html('CARGANDO');
+				},
+				success: function(data){
+					$('#personal_detalles').html(data);
+					$('#dataModal').modal('show');
+					$.getScript(load(1));
+				}
+			});
+		});
 
 		
 		$("#enviarLISTADO").click(function(){

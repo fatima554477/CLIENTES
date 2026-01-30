@@ -104,10 +104,25 @@ PROGRAMER
 		return $arrayquery = mysqli_query($conn,$variablequery);
 	}
 
-/* BORRAR */
-	  /* public function Listado_subefacturaDOCTOS($ID){ $conn = $this->db(); $variablequery = "select * from 02SUBETUFACTURADOCTOS where idRelacion = '".$_SESSION['idPROV']."' and idTemporal = '".$ID."'  order by id desc "; return $arrayquery = mysqli_query($conn,$variablequery); }*/
 
-/* OTROS PRODUCTOS O SERVICIOS QUE OFRECE EL PROVEEDOR*/
+	public function ACTUALIZA_AUDITORIAc (
+	$AUDITORIAc_id , $AUDITORIAc_text ){
+	
+		$conn = $this->db();
+		$session = isset($_SESSION['idc'])?$_SESSION['idc']:'';    
+		if($session != ''){
+	
+		 $var1 = "update 06usuarios SET AUDITORIAc = '".$AUDITORIAc_text."' WHERE id = '".$AUDITORIAc_id."'  ";	
+	
+		//if($pasarpagado_text=='si'){
+		mysqli_query($conn,$var1) or die('P156'.mysqli_error($conn));
+		return "Actualizado^".$AUDITORIAc_text;
+		//}
+			
+        }else{
+		echo "NO HAY UN PROVEEDOR SELECCIONADO";	
+		}
+    }
 
 	public function variableusuario2(){
 		$conn = $this->db();
@@ -446,7 +461,51 @@ PROGRAMER
 		}		
 	}
 
+
+
+	public function ACTUALIZA_LC($ID,$email,$contrasenia,$nommbrerazon,$C_NOMBRE_COMERCIAL_EMPRESA,$rfc,$usuario,$CUENTRA_MAESTRA){
+		$conn = $this->db();
+
+		$nommbrerazon = trim($nommbrerazon);
+		$C_NOMBRE_COMERCIAL_EMPRESA = trim($C_NOMBRE_COMERCIAL_EMPRESA);
+		$rfc = trim($rfc);
+		$CUENTRA_MAESTRA = trim($CUENTRA_MAESTRA);
+
+		mysqli_query($conn, "update 06usuarios set
+		contrasenia = '".$contrasenia."' ,
+		email = '".$email."',
+		nommbrerazon = '".$nommbrerazon."',
+		usuario = '".$usuario."'
+		where id = '".$ID."' ; ") or die('P156'.mysqli_error($conn));
+
+		$direccionQuery = mysqli_query($conn, "select idRelacion from 06direccionclientes where idRelacion = '".$ID."' ");
+		if (mysqli_num_rows($direccionQuery) > 0) {
+			mysqli_query($conn, "update 06direccionclientes set
+			C_NOMBRE_FISCAL_RS_EMPRESA = '".$nommbrerazon."',
+			C_NOMBRE_COMERCIAL_EMPRESA = '".$C_NOMBRE_COMERCIAL_EMPRESA."',
+			P_RFC_MTDP = '".$rfc."',
+			CUENTRA_MAESTRA = '".$CUENTRA_MAESTRA."'
+			where idRelacion = '".$ID."' ; ") or die('P156'.mysqli_error($conn));
+		} else {
+			mysqli_query($conn, "insert into 06direccionclientes (
+			idRelacion,
+			C_NOMBRE_FISCAL_RS_EMPRESA,
+			C_NOMBRE_COMERCIAL_EMPRESA,
+			P_RFC_MTDP,
+			CUENTRA_MAESTRA
+			) values (
+			'".$ID."',
+			'".$nommbrerazon."',
+			'".$C_NOMBRE_COMERCIAL_EMPRESA."',
+			'".$rfc."',
+			'".$CUENTRA_MAESTRA."'
+			); ") or die('P156'.mysqli_error($conn));
+		}
+
+		return "ACTUALIZADO";
 	}
+	}
+
 
 
 

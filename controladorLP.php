@@ -20,7 +20,7 @@ $AUDITORIAc_id = isset($_POST["AUDITORIAc_id"])?$_POST["AUDITORIAc_id"]:"";
 $AUDITORIAc_text = isset($_POST["AUDITORIAc_text"])?$_POST["AUDITORIAc_text"]:"";
 
 if($AUDITORIAc_id!='' and ($AUDITORIAc_text=='si' or $AUDITORIAc_text=='no') ){	
-echo $pagoproveedores->ACTUALIZA_AUDITORIAc ($AUDITORIAc_id , $AUDITORIAc_text  );
+echo $proveedoresC->ACTUALIZA_AUDITORIAc ($AUDITORIAc_id , $AUDITORIAc_text  );
 }	
 
 if($validaLISTADO == 'validaLISTADO'){

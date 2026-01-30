@@ -224,68 +224,45 @@ echo $email; ?>"></td>
   }
 </style>
 </td>
-
-
 <?php if($database->variablespermisos('','AUDITORIAc','ver')=='si'){ ?>
+<td style="text-align:center; background:
+    <?php echo ($row["AUDITORIAc"] == 'si') ? '#ceffcc' : '#e9d8ee'; ?>;" 
+    id="color_AUDITORIAc<?php echo $row["IDDD"]; ?>">
 
-<td style="text-align:center; background:<?php echo ($row["AUDITORIAc"] == 'checked') ? '#ceffcc' : '#e9d8ee'; 
+    <input type="checkbox"
+        style="width:30px; cursor:pointer;"
+        class="form-check-input"
+        id="AUDITORIAc<?php echo $row["IDDD"]; ?>"
+        name="AUDITORIAc<?php echo $row["IDDD"]; ?>"
+        value="<?php echo $row["IDDD"]; ?>"
+        <?php
+        $puedeGuardar       = $database->variablespermisos('', 'AUDITORIAc', 'guardar') == 'si';
+        $puedeModificar = $database->variablespermisos('', 'AUDITORIAc', 'modificar') == 'si';
 
-$puedeGuardar   = ($database->variablespermisos('', 'AUDITORIAc', 'guardar') == 'si');
-$puedeModificar = ($database->variablespermisos('', 'AUDITORIAc', 'modificar') == 'si');
-?>;"
-    id="color_AUDITORIA2<?php echo $row["IDDD"]; ?>">
-
-  <input type="checkbox"
-      style="width:30px; cursor:pointer;"
-      class="form-check-input auditoria-checkbox"
-      id="AUDITORIAc<?php echo $row["IDDD"]; ?>"
-      name="AUDITORIAc<?php echo $row["IDDD"]; ?>"
-      value="<?php echo $row["IDDD"]; ?>"
-      data-id="<?php echo $row["IDDD"]; ?>"
-
-      <?php
-      // Estado visual
-      if ($row["AUDITORIAc"] == 'checked') {
-          echo 'checked ';
-      }
-
-      // BLOQUEOS por permisos
-      if (
-          (!$puedeGuardar && $row["AUDITORIAc"] != 'checked') ||  // no puede guardar -> no puede prender por primera vez
-          (!$puedeModificar && $row["AUDITORIAc"] == 'checked')   // no puede modificar -> si ya está prendido, no puede apagar
-      ) {
-          echo 'disabled ';
-      }
-      ?>
-
-onchange="
-  const id = this.dataset.id;
-  const estaba = (localStorage.getItem('auditoria_activo_id') === id);
-
-  // apaga todos
-  document.querySelectorAll('.auditoria-checkbox').forEach(cb => {
-    cb.checked = false;
-    const otherId = cb.dataset.id;
-    const otherCell = document.getElementById('color_AUDITORIA2' + otherId);
-    if (otherCell) otherCell.style.background = '#e9d8ee';
-  });
-
-  if (estaba) {
-    // si era el mismo, lo apaga y limpia
-    localStorage.removeItem('auditoria_activo_id');
-  } else {
-    // prende el nuevo
-    this.checked = true;
-    const cell = document.getElementById('color_AUDITORIA2' + id);
-    if (cell) cell.style.background = '#ceffcc';
-    localStorage.setItem('auditoria_activo_id', id);
-  }
-"
-  />
+        if ($row["AUDITORIAc"] == 'si') {
+            // Ya autorizado → marcado y bloqueado salvo permiso de modificación
+            echo $puedeModificar
+                ? 'checked onclick="AUDITORIAc('.$row["IDDD"].')"'
+                : 'checked disabled style="cursor:not-allowed;" title="Ya autorizado"';
+        } else {
+            if($puedeGuardar){
+                // Permitir acción → al marcar se llama a tu función y se bloquea el checkbox
+                echo 'onclick="AUDITORIAc('.$row["IDDD"].'); this.disabled=true; this.style.cursor=\'not-allowed\';"';
+            } else {
+                // Sin permiso → bloqueado
+                echo 'disabled style="cursor:not-allowed;" title="Sin permiso para modificar"';
+            }
+        }
+        ?>
+    />
+    <?php $colspan += 1; ?>
 
 </td>
 
 <?php } ?>
+
+
+
 		
 
 
@@ -338,22 +315,7 @@ onchange="
 </tbody>
 		</table>
 		</div>
-		<script>
-			document.querySelectorAll('.auditoria-checkbox').forEach(function (checkbox) {
-				const id = checkbox.getAttribute('data-id');
-				if (!id) {
-					return;
-				}
-				if (localStorage.getItem('auditoria_checkbox_' + id) === 'checked') {
-					checkbox.checked = true;
-					checkbox.disabled = true;
-					const cell = document.getElementById('color_AUDITORIA2' + id);
-					if (cell) {
-						cell.style.background = '#ceffcc';
-					}
-				}
-			});
-		</script>
+
 		<div class="clearfix">
 			<?php 
 				$inicios=$offset+1;

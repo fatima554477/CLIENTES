@@ -1,8 +1,37 @@
 <script type="text/javascript">
 	
-	/*filtro */
+	function STATUS_AUDITORIA2(AUDITORIA2_id){
+	
 
-/* iniciaB1*/
+	var checkBox = document.getElementById("STATUS_AUDITORIA2"+AUDITORIA2_id);
+	var AUDITORIA2_text = "";
+	if (checkBox.checked == true){
+	AUDITORIA2_text = "si";
+	}else{
+	AUDITORIA2_text = "no";
+	}
+	  $.ajax({
+		url:'pagoproveedores/controladorPP.php',
+		method:'POST',
+		data:{AUDITORIA2_id:AUDITORIA2_id,AUDITORIA2_text:AUDITORIA2_text},
+		beforeSend:function(){
+		$('#pasarpagado2').html('cargando');
+	},
+		success:function(data){
+		var result = data.split('^');				
+		$('#pasarpagado2').html("Cargando...").fadeIn().delay(500).fadeOut();
+		load(1);
+
+		if(result[1]=='si'){
+		$('#color_AUDITORIA2'+AUDITORIA2_id).css('background-color', '#ceffcc');
+		}
+		if(result[1]=='no'){
+		$('#color_AUDITORIA2'+AUDITORIA2_id).css('background-color', '#e9d8ee');
+		}		
+		
+	}
+	});
+}
 
 		$(function() {
 			load(1);
